@@ -4,4 +4,8 @@
     <select id="test" resultType="map">
         select id,name from test
     </select>
+
+    <select id="connectMysql" resultType="int" >
+        select 1 from dual
+    </select>
 </mapper>

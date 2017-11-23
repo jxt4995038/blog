@@ -20,4 +20,9 @@ public class TestServiceImpl implements TestService {
         String name = test.get(0).get("name").toString();
         return name;
     }
+
+
+    public void connectMysql(){
+        testMapper.connectMysql();
+    }
 }

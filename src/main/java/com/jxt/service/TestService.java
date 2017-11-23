@@ -6,4 +6,6 @@ package com.jxt.service;
 public interface TestService {
 
     String test();
+
+    void connectMysql();
 }

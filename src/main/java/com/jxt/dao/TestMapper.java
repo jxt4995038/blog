@@ -9,4 +9,6 @@ import java.util.Map;
 public interface TestMapper {
 
     List<Map> test();
+
+    void connectMysql();
 }

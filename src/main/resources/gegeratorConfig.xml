@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="Oracle" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="javaFileEncoding" value="UTF-8"/>
+
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="com.jxt.MyMapper"/>
+            <!-- caseSensitive默认false，当数据库表名区分大小写时，可以将该属性设置为true -->
+            <property name="caseSensitive" value="true"/>
+            <property name="beginningDelimiter" value=""/>
+            <property name="endingDelimiter" value=""/>
+        </plugin>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://47.93.247.41:3306/jxt?useSSL=false"
+                        userId="root"
+                        password="123456">
+        </jdbcConnection>
+
+        <!--必要配置-->
+        <javaModelGenerator targetPackage="com.jxt.entity" targetProject="./src/main/java"/>
+        <!--可选配置-->
+        <sqlMapGenerator targetPackage="com.jxt.dao" targetProject="./src/main/resources/mybatis"/>
+
+        <javaClientGenerator targetPackage="com.jxt.dao" targetProject="./src/main/java" type="XMLMAPPER"/>
+
+        <table tableName="test">
+            <columnOverride column="id" jdbcType="int" javaType="java.lang.Integer"></columnOverride>
+        </table>
+    </context>
+</generatorConfiguration>

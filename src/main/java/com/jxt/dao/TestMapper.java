@@ -1,14 +1,9 @@
 package com.jxt.dao;
 
-import java.util.List;
-import java.util.Map;
+import com.jxt.MyMapper;
+import com.jxt.entity.Test;
 
-/**
- * Created by Administrator on 2017/11/11 0011.
- */
-public interface TestMapper {
+public interface TestMapper extends MyMapper<Test> {
 
-    List<Map> test();
-
-    void connectMysql();
+    int connectMysql();
 }

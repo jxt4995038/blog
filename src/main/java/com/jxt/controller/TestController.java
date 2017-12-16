@@ -1,5 +1,9 @@
 package com.jxt.controller;
 
+import com.jxt.controller.response.FailResponse;
+import com.jxt.controller.response.IResponse;
+import com.jxt.controller.response.SuccessResponse;
+import com.jxt.entity.Test;
 import com.jxt.service.TestService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,10 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+
 /**
  * Created by Administrator on 2017/11/11 0011.
  */
 @RestController
+@RequestMapping(value = "test")
 public class TestController {
     @Autowired
     private TestService testService;
@@ -20,9 +28,16 @@ public class TestController {
 
 
     @RequestMapping(value = "/test",method = RequestMethod.GET)
-    public String Test(){
+    public IResponse Test(Integer id, HttpServletResponse response){
+        response.setHeader("Access-Control-Allow-Origin", "*");
+
         logger.debug("进入了{}方法");
-        String result = testService.test();
-        return result;
+        Test test;
+        try {
+            test = testService.test(id);
+        }catch (Exception e){
+            return new FailResponse(e.getMessage());
+        }
+        return new SuccessResponse(test);
     }
 }

@@ -1,5 +1,6 @@
 package com.jxt.serviceImpl;
 
+import com.github.pagehelper.PageHelper;
 import com.jxt.dao.TestMapper;
 import com.jxt.entity.Test;
 import com.jxt.service.TestService;
@@ -18,12 +19,15 @@ public class TestServiceImpl implements TestService {
     @Autowired
     private TestMapper testMapper;
 
-    public String test(){
+    public Test test(Integer id) throws Exception{
         Example example = new Example(Test.class);
-        example.createCriteria().andEqualTo("id",1);
+        example.createCriteria().andEqualTo("id",id);
+
         List<Test> tests = testMapper.selectByExample(example);
-        String name = tests.get(0).getName();
-        return name;
+        if (tests==null||tests.size()==0) {
+            throw new Exception("没有查询到该博文");
+        }
+        return tests.get(0);
     }
 
 

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>博客编写</title>
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!--ueditor所需要的js以及css-->
+    <link href="../js/edit/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
+    <script type="text/javascript" src="../js/edit/third-party/jquery.min.js"></script>
+    <script type="text/javascript" charset="gbk" src="../js/edit/umeditor.config.js"></script>
+    <script type="text/javascript" charset="gbk" src="../js/edit/umeditor.min.js"></script>
+    <script type="text/javascript" src="../js/edit/lang/zh-cn/zh-cn.js"></script>
+
+
+</head>
+<body style="background: #E7E9E6">
+<div class="container" >
+    <div>
+        <div class="col-sm-offset-9 col-md-offset-9 col-bg-offset-9">
+            请<a href="#">注册</a>或<a href="#">登录</a>
+            <a href="#">消息中心<span class="badge">10</span></a>
+        </div>
+        <!--页面标题 ``d-->
+        <div class="page-header">
+            标题
+        </div>
+    </div>
+    <!--导航栏-->
+    <div class="row">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">菜鸟教程</a>
+                </div>
+                <div>
+                    <ul class="nav navbar-nav">
+                        <li><a href="#">iOS</a></li>
+                        <li><a href="#">SVN</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                Java
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">jmeter</a></li>
+                                <li><a href="#">EJB</a></li>
+                                <li><a href="#">Jasper Report</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">分离的链接</a></li>
+                                <li class="divider"></li>
+                                <li><a href="#">另一个分离的链接</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!--内容-->
+    <div class="row">
+        <div id="editor" >
+            <p>Please input ...</p>
+        </div>
+        <button id="btn1" class="btn btn-default">获取html</button>
+    </div>
+    <div><hr /></div>
+
+    <div class="row">
+        <div class="text-center">Desiged by jxt</div>
+    </div>
+</div>
+
+<!-- 注意， 只需要引用 JS，无需引用任何 CSS ！！！-->
+<script type="text/javascript" src="../js/edit/wangEditor.js"></script>
+<script type="text/javascript">
+        var E = window.wangEditor
+        var editor = new E('#editor')
+
+        //editor.customConfig.uploadImgShowBase64 = true   // 使用 base64 保存图片
+        editor.customConfig.uploadImgServer = 'localhost:8081/upload/imageUpload'  // 上传图片到服务器
+
+        editor.create()
+
+        document.getElementById('btn1').addEventListener('click', function () {
+        // 读取 html
+        alert(editor.txt.html())
+    }, false)
+    </script>
+
+</body>
+</html>

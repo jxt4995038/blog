@@ -24,4 +24,18 @@ public class ToHtmlController {
     public String writeBlog(){
         return "writeBlog";
     }
+
+    @RequestMapping(value = "navigation")
+    public String navigation(){
+        return "navigation";
+    }
+
+    @RequestMapping(value = "content")
+    public String content(){return "content";}
+
+    @RequestMapping(value = "content_left")
+    public String contentLeft(){return "content_left";}
+
+    @RequestMapping(value = "content_right")
+    public String contentRight(){return "content_right";}
 }

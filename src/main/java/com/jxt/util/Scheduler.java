@@ -1,8 +1,6 @@
 package com.jxt.util;
 
 
-import com.jxt.controller.TestController;
-import com.jxt.service.TestService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +15,11 @@ import java.time.LocalDateTime;
 @Component
 public class Scheduler {
     private static final Logger logger = LoggerFactory.getLogger(Scheduler.class);
-    @Autowired
-    private TestService testService;
-
-    @Scheduled(cron="0 0/1 * * * ?")   //每分钟执行一次，防止mysql断开
-    public void checkJDBC(){
-        testService.connectMysql();
-    }
+//    @Autowired
+//    private TestService testService;
+//
+//    @Scheduled(cron="0 0/1 * * * ?")   //每分钟执行一次，防止mysql断开
+//    public void checkJDBC(){
+//        testService.connectMysql();
+//    }
 }

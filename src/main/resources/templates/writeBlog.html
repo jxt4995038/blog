@@ -1,93 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>博客编写</title>
-    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" />
     <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <!--ueditor所需要的js以及css-->
-    <link href="../js/edit/themes/default/css/umeditor.css" type="text/css" rel="stylesheet">
-    <script type="text/javascript" src="../js/edit/third-party/jquery.min.js"></script>
-    <script type="text/javascript" charset="gbk" src="../js/edit/umeditor.config.js"></script>
-    <script type="text/javascript" charset="gbk" src="../js/edit/umeditor.min.js"></script>
-    <script type="text/javascript" src="../js/edit/lang/zh-cn/zh-cn.js"></script>
-
+    <!--引入全局js-->
+    <script src="../js/index.js"></script>
+    <!--引入该页面的js-->
+    <script src="../js/writeBlog.js"></script>
 
 </head>
-<body style="background: #E7E9E6">
-<div class="container" >
+<body>
     <div>
-        <div class="col-sm-offset-9 col-md-offset-9 col-bg-offset-9">
-            请<a href="#">注册</a>或<a href="#">登录</a>
-            <a href="#">消息中心<span class="badge">10</span></a>
-        </div>
-        <!--页面标题 ``d-->
-        <div class="page-header">
-            标题
-        </div>
-    </div>
-    <!--导航栏-->
-    <div class="row">
-        <nav class="navbar navbar-default" role="navigation">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">菜鸟教程</a>
-                </div>
-                <div>
-                    <ul class="nav navbar-nav">
-                        <li><a href="#">iOS</a></li>
-                        <li><a href="#">SVN</a></li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                Java
-                                <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">jmeter</a></li>
-                                <li><a href="#">EJB</a></li>
-                                <li><a href="#">Jasper Report</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">分离的链接</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">另一个分离的链接</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </div>
-    <!--内容-->
-    <div class="row">
+        标题：<input type="text" id="blogTitle" />
         <div id="editor" >
             <p>Please input ...</p>
         </div>
-        <button id="btn1" class="btn btn-default">获取html</button>
+        <input type="hidden" id="content" />
+        <div>
+            <span>博文类型</span>
+            <select id="blogType">
+                <option class="selected:selected">java1</option>
+                <option>java2</option>
+                <option>java3</option>
+                <option>java4</option>
+            </select>
+        </div>
+        <div class="text-center">
+            <input type="button" id="btn_submit" class="btn btn-default form-control"  value="提交" onclick="submitBlog(editor.txt.html(),editor.txt.text()),editor"/>
+        </div>
     </div>
-    <div><hr /></div>
 
-    <div class="row">
-        <div class="text-center">Desiged by jxt</div>
-    </div>
-</div>
-
-<!-- 注意， 只需要引用 JS，无需引用任何 CSS ！！！-->
-<script type="text/javascript" src="../js/edit/wangEditor.js"></script>
-<script type="text/javascript">
+    <!-- 注意， 只需要引用 JS，无需引用任何 CSS ！！！-->
+    <script type="text/javascript" src="../js/edit/wangEditor.js"></script>
+    <script type="text/javascript">
         var E = window.wangEditor
         var editor = new E('#editor')
 
-        //editor.customConfig.uploadImgShowBase64 = true   // 使用 base64 保存图片
-        editor.customConfig.uploadImgServer = 'localhost:8081/upload/imageUpload'  // 上传图片到服务器
+        editor.customConfig.uploadImgShowBase64 = true   // 使用 base64 保存图片
+        //editor.customConfig.uploadImgServer = 'http://127.0.0.1:8081/upload/imageUpload'  // 上传图片到服务器
+
+        // 关闭粘贴样式的过滤
+        editor.customConfig.pasteFilterStyle = false
+        // 自定义处理粘贴的文本内容
+        editor.customConfig.pasteTextHandle = function (content) {
+            // content 即粘贴过来的内容（html 或 纯文本），可进行自定义处理然后返回
+            return content + '<p></p>'
+        }
+
+        // 隐藏“网络图片”tab
+        editor.customConfig.showLinkImg = false
+        //配置上传的文件名
+        //editor.customConfig.uploadFileName = 'file';
+
+        editor.customConfig.debug = true
 
         editor.create()
 
-        document.getElementById('btn1').addEventListener('click', function () {
-        // 读取 html
-        alert(editor.txt.html())
-    }, false)
     </script>
 
 </body>

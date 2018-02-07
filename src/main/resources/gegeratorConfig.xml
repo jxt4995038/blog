@@ -28,8 +28,10 @@
 
         <javaClientGenerator targetPackage="com.jxt.dao" targetProject="./src/main/java" type="XMLMAPPER"/>
 
-        <table tableName="test">
+        <table tableName="blog_reply">
             <columnOverride column="id" jdbcType="int" javaType="java.lang.Integer"></columnOverride>
         </table>
+
+
     </context>
 </generatorConfiguration>

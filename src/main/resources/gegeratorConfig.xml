@@ -23,8 +23,6 @@
 
         <!--必要配置-->
         <javaModelGenerator targetPackage="com.jxt.entity" targetProject="./src/main/java"/>
-        <!--可选配置-->
-        <sqlMapGenerator targetPackage="com.jxt.dao" targetProject="./src/main/resources/mybatis"/>
 
         <javaClientGenerator targetPackage="com.jxt.dao" targetProject="./src/main/java" type="XMLMAPPER"/>
 

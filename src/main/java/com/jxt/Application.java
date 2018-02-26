@@ -7,12 +7,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.web.WebApplicationInitializer;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
@@ -20,7 +22,8 @@ import javax.sql.DataSource;
  * Created by Administrator on 2017/11/11 0011.
  */
 @SpringBootApplication
-@EnableScheduling                //用来使用定时器
+@EnableScheduling //用来使用定时器
+@EnableTransactionManagement
 @MapperScan("com.jxt.dao")
 public class Application extends SpringBootServletInitializer{
     //继承SpringBootServletInitializer可以打war包
@@ -37,16 +40,4 @@ public class Application extends SpringBootServletInitializer{
         return new org.apache.tomcat.jdbc.pool.DataSource();
     }
 
-    @Bean
-    public SqlSessionFactory sqlSessionFactoryBean() throws Exception {
-
-        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-        sqlSessionFactoryBean.setDataSource(dataSource());
-
-        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-
-        sqlSessionFactoryBean.setMapperLocations(resolver.getResources("classpath:/mybatis/*.xml"));
-
-        return sqlSessionFactoryBean.getObject();
-    }
 }

@@ -22,8 +22,6 @@ function initBlogList(){
     // $("#replyInfo").hide();
     //2 设置右侧博客的内容
     var blogType = $("#blogType").val();
-    alert($("#blogType"));
-    alert($("#blogType").val());
     var pageIndex = $("#pageIndex").val();
     var pageSize = $("#pageSize").val();
 
@@ -78,7 +76,7 @@ function showInfo(id){
         data:{"id":id},
         dataType:"json",
         success:function(data){
-            //将查询到的结果放到右侧的div中
+            // 1 查询
             var info = ""
             info +="<div class='panel panel-default' id='blogContent'><div class='panel-heading'><a href='#' onclick='showInfo("+id+")'>";
             info += data.data.title;
@@ -92,6 +90,9 @@ function showInfo(id){
             info+="<input type='hidden' id='blogId' value='"+id+"' />"
 
             $("#blogInfo").html(info);
+
+            // 2 显示回复框
+            $("#replyInfo").load("http://127.0.0.1:8088/toHtml/replyInfo");
         },
         error:function(result){
             alert("error");

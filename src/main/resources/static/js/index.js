@@ -7,9 +7,6 @@ function initIndex(){
 }
 
 function  loadContent(id) {
-    alert($("#blogType"))
-    $("#blogType").val(id);
-    alert($("#blogType").val());
     $("#content").load("http://127.0.0.1:8088/toHtml/content")
 }
 

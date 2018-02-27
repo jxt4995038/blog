@@ -1,10 +1,8 @@
 package com.jxt.serviceImpl;
 
-import com.github.pagehelper.PageHelper;
 import com.jxt.dao.BlogMapper;
 import com.jxt.entity.Blog;
 import com.jxt.eum.BlogStatus;
-import com.jxt.init.InitInfo;
 import com.jxt.service.BlogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +16,7 @@ import java.util.*;
 @Service
 @Transactional
 public class BlogServiceImpl implements BlogService {
+
 
     @Autowired
     private BlogMapper blogMapper;
@@ -46,18 +45,17 @@ public class BlogServiceImpl implements BlogService {
 //        }catch (Exception e){
 //            e.printStackTrace();
 //        }
+            //2 将blog信息插入数据库中
+            Blog blog = new Blog();
+            blog.setTitle(blogTitle);
 
-        //2 将blog信息插入数据库中
-        Blog blog = new Blog();
-        blog.setTitle(blogTitle);
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh24:mm:ss");
-        blog.setCreateTime(sdf.format(new Date()));
-        blog.setContentHtml(data_html);
-        blog.setTypeId(blogType);
-        blog.setStatus(BlogStatus.VALID.getIndex());
-        blog.setCreateUserId(createUserId);
-        blogMapper.insert(blog);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            blog.setCreateTime(sdf.format(new Date()));
+            blog.setContentHtml(data_html);
+            blog.setTypeId(blogType);
+            blog.setStatus(BlogStatus.VALID.getIndex());
+            blog.setCreateUserId(createUserId);
+            blogMapper.insert(blog);
 
     }
 
@@ -86,7 +84,7 @@ public class BlogServiceImpl implements BlogService {
             innerMap.put("title",blog.getTitle());
             innerMap.put("createTime",blog.getCreateTime());
             innerMap.put("contentHtml",blog.getContentHtml());
-            innerMap.put("typeName", InitInfo.blogTypeMapping.get(blog.getTypeId()));
+            innerMap.put("typeName", BlogTypeServiceImpl.blogTypeMap.get(String.valueOf(blog.getTypeId())));
             resultMapList.add(innerMap);
         }
         return resultMapList;

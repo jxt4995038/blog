@@ -45,7 +45,7 @@ function initBlogList(){
                         "                    <div class='panel-body'>" +
                         "                    <p>"+obj.contentHtml+"</p>" +
                         "                    <p class='pull-right'>" +
-                        "                    <span>标签：<a href='#'>"+obj.typeId+"</a></span>" +
+                        "                    <span>标签：<a href='#'>"+obj.typeName+"</a></span>" +
                         "                <span>发布日期："+obj.createTime+"</span>" +
                         "                </p>" +
                         "                </div>" +

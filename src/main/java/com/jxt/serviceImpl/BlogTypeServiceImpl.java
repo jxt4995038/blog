@@ -3,10 +3,13 @@ package com.jxt.serviceImpl;
 import com.jxt.dao.BlogTypeMapper;
 import com.jxt.entity.BlogType;
 import com.jxt.service.BlogTypeService;
+import com.jxt.util.Jsons;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.PostConstruct;
@@ -20,7 +23,8 @@ import java.util.stream.Collectors;
 public class BlogTypeServiceImpl implements BlogTypeService{
     private static final Logger logger = LoggerFactory.getLogger(BlogTypeServiceImpl.class);
 
-
+    @Autowired
+    private JedisPool jedisPool;
     @Autowired
     private BlogTypeMapper blogTypeMapper;
 
@@ -30,9 +34,21 @@ public class BlogTypeServiceImpl implements BlogTypeService{
     //没有带主从关系的博客类型  key为类型id  value为类型名字  再反转一下
     public static Map<String,String> blogTypeMap = new HashMap<>();
 
-    @PostConstruct
-    public void initBolgTypeWithLevel(){
-        try {
+
+    public void initBolgType(){
+        List<BlogType> blogTypes = blogTypeMapper.selectAllType();
+        for (BlogType blogType : blogTypes) {
+            blogTypeMap.put(String.valueOf(blogType.getId()),blogType.getType());
+            blogTypeMap.put(blogType.getType(),String.valueOf(blogType.getId()));
+        }
+        logger.info("init blog type without level mapping");
+    }
+
+    public Map<String,String> showAllTypes() throws Exception{
+        Jedis jedis = jedisPool.getResource();
+        Map<String, String> blogTypeMapWithLevel;
+        blogTypeMapWithLevel= jedis.hgetAll("blogTypeMapWithLevel");
+        if (blogTypeMapWithLevel==null||blogTypeMapWithLevel.isEmpty()) {
             List<BlogType> blogTypes = blogTypeMapper.selectParentType();
             if (blogTypes!=null&&blogTypes.size()==0) {
                 throw new Exception("数据库中没有博客分类信息");
@@ -42,7 +58,7 @@ public class BlogTypeServiceImpl implements BlogTypeService{
                 List<BlogType> subTypes = blogTypeMapper.selectChildType(parentId);
                 if (subTypes==null||subTypes.size()==0) {
                     //没有二级菜单的话  map中放入的内容 key=类型id，类型名称  value=null
-                    blogTypeMapWithLevel.put(String.valueOf(blogType.getId()+","+blogType.getType()),null);
+                    jedis.hset("blogTypeMapWithLevel",String.valueOf(blogType.getId()+","+blogType.getType()),"");
                 }else {
                     //有二级菜单的话  map中放入的内容  key为 子类型id1+子类型id2+子类型id3，父类型名字 value数据类型为List<Map> 子类型的id  子类型的name
                     String key_first = String.join("-",subTypes.stream().map(e ->String.valueOf(e.getId())).collect(Collectors.toList()));
@@ -57,25 +73,15 @@ public class BlogTypeServiceImpl implements BlogTypeService{
                         innerMap.put(String.valueOf(subType.getId()),subType.getType());
                         innerList.add(innerMap);
                     }
-                    blogTypeMapWithLevel.put(key,innerList);
+                    jedis.hset("blogTypeMapWithLevel",key,Jsons.objToJson(innerList));
                 }
             }
-        }catch (Exception e){
-            e.printStackTrace();
+            blogTypeMapWithLevel= jedis.hgetAll("blogTypeMapWithLevel");
+        }else {
+            blogTypeMapWithLevel= jedis.hgetAll("blogTypeMapWithLevel");
         }
-        logger.info("init blog type with level mapping");
+        return blogTypeMapWithLevel;
     }
-
-    @PostConstruct
-    public void initBolgType(){
-        List<BlogType> blogTypes = blogTypeMapper.selectAllType();
-        for (BlogType blogType : blogTypes) {
-            blogTypeMap.put(String.valueOf(blogType.getId()),blogType.getType());
-            blogTypeMap.put(blogType.getType(),String.valueOf(blogType.getId()));
-        }
-        logger.info("init blog type without level mapping");
-    }
-
 
 }
 

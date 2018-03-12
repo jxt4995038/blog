@@ -9,18 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/blogType")
 public class BlogTypeController {
-
 
     @Autowired
     private BlogTypeService blogTypeService;
@@ -31,7 +25,7 @@ public class BlogTypeController {
     public IResponse showAllTypes(HttpServletResponse response){
         response.setHeader("Access-Control-Allow-Origin", "*");
         try {
-            Map<String,Object> resultMap = BlogTypeServiceImpl.blogTypeMapWithLevel;
+            Map<String,String> resultMap = blogTypeService.showAllTypes();
             return new SuccessResponse(resultMap);
         }catch (Exception e){
             return new FailResponse(e.getMessage());

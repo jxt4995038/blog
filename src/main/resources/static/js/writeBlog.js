@@ -1,3 +1,26 @@
+function initWriteBlogType(){
+    alert("进入了查询博客类型的方法")
+    $.ajax({
+        url:url_server+"blogType/showAllTypesWithoutMapping",
+        type:"post",
+        dataType:"json",
+        success:function (result) {
+            console.info(result.data.length);
+            var htmlInfo = "";
+            for (var i =0;i<result.data.length;i++){
+                var obj = (result.data)[i];
+                var id = obj.key;
+                var typeName = obj.value;
+                htmlInfo+="<option id = '"+id+"'>"+typeName+"</option>"
+            }
+            $("#blogType").html(htmlInfo);
+        },
+        error:function(){
+            alert("the page of writeBlog has a error status")
+        }
+    })
+}
+
 function submitBlog(data_html,data_text){
     var blogTitle = $("#blogTitle").val();
     //TODO 创建博文的userId先写死
@@ -13,7 +36,7 @@ function submitBlog(data_html,data_text){
             alert("请输入内容")
     }else {
         $.ajax({
-            url:"http://127.0.0.1:8088/blog/blogAdd",
+            url:url_server+"blog/blogAdd",
             type:"post",
             dataType:"json",
             data:{"data_html":data_html,"data_text":data_text,"blogTitle":blogTitle,"createUserId":1,"blogType":1},

@@ -5,7 +5,7 @@ function initNavBar(){
     var pageSize = $("#pageSize").val();
 
     $.ajax({
-        url:"http://127.0.0.1:8088/blogType/showAllTypes",
+        url:url_server+"blogType/showAllTypes",
         type:"post",
         data:{},
         success:function(result){

@@ -1,6 +1,8 @@
 package com.jxt.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Table(name = "blog")
 public class Blog {
@@ -13,6 +15,7 @@ public class Blog {
     /**
      * 博客标题
      */
+    @Size(min = 3,message = "标题太短，请重新输入")
     private String title;
 
     /**

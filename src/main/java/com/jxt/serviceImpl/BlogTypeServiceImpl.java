@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
-import tk.mybatis.mapper.entity.Example;
 
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,13 +33,14 @@ public class BlogTypeServiceImpl implements BlogTypeService{
     public static Map<String,String> blogTypeMap = new HashMap<>();
 
 
-    public void initBolgType(){
+    public Map<String,String> showAllTypesWithoutMapping(){
+        Map<String,String> blogTypeWithoutMapping = new HashMap<>();
         List<BlogType> blogTypes = blogTypeMapper.selectAllType();
         for (BlogType blogType : blogTypes) {
             blogTypeMap.put(String.valueOf(blogType.getId()),blogType.getType());
-            blogTypeMap.put(blogType.getType(),String.valueOf(blogType.getId()));
         }
         logger.info("init blog type without level mapping");
+        return blogTypeMap;
     }
 
     public Map<String,String> showAllTypes() throws Exception{

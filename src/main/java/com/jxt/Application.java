@@ -34,10 +34,5 @@ public class Application extends SpringBootServletInitializer{
     public static void main(String[] args){
         SpringApplication.run(Application.class, args);
     }
-    @Bean
-    @ConfigurationProperties(prefix="spring.datasource")
-    public DataSource dataSource() {
-        return new org.apache.tomcat.jdbc.pool.DataSource();
-    }
 
 }

@@ -7,10 +7,6 @@
     <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <!--引入全局js-->
-    <script src="../js/index.js"></script>
-    <!--引入该页面的js-->
-    <script src="../js/writeBlog.js"></script>
 
 </head>
 <body>
@@ -23,10 +19,6 @@
         <div>
             <span>博文类型</span>
             <select id="blogType">
-                <option class="selected:selected">java1</option>
-                <option>java2</option>
-                <option>java3</option>
-                <option>java4</option>
             </select>
         </div>
         <div class="text-center">
@@ -34,8 +26,6 @@
         </div>
     </div>
 
-    <!-- 注意， 只需要引用 JS，无需引用任何 CSS ！！！-->
-    <script type="text/javascript" src="../js/edit/wangEditor.js"></script>
     <script type="text/javascript">
         var E = window.wangEditor
         var editor = new E('#editor')
@@ -60,6 +50,8 @@
         editor.create()
 
     </script>
-
+    <script>
+        $(initWriteBlogType());
+    </script>
 </body>
 </html>

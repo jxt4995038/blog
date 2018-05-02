@@ -21,11 +21,23 @@ public class BlogTypeController {
 
     public static Map<String,Object> stringObjectMap;
 
-    @RequestMapping(value = "/showAllTypes",method = RequestMethod.POST)
+    @RequestMapping(value = "/showAllTypes")
     public IResponse showAllTypes(HttpServletResponse response){
         response.setHeader("Access-Control-Allow-Origin", "*");
         try {
             Map<String,String> resultMap = blogTypeService.showAllTypes();
+            return new SuccessResponse(resultMap);
+        }catch (Exception e){
+            return new FailResponse(e.getMessage());
+        }
+    }
+
+
+    @RequestMapping(value = "/showAllTypesWithoutMapping")
+    public IResponse showAllTypesWithoutMapping(HttpServletResponse response){
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        try {
+            Map<String,String> resultMap = blogTypeService.showAllTypesWithoutMapping();
             return new SuccessResponse(resultMap);
         }catch (Exception e){
             return new FailResponse(e.getMessage());

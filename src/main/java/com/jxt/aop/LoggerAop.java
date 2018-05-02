@@ -26,16 +26,13 @@ public class LoggerAop {
 
     @Before("log()")
     public void before(JoinPoint joinPoint){
-        System.out.println("代理类的信息"+joinPoint.getThis().toString());
-        System.out.println("代理方法的信息"+joinPoint.getSignature().getName());
 
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = (HttpServletRequest) requestAttributes.resolveReference(RequestAttributes.REFERENCE_REQUEST);
         System.out.println(String.valueOf(request.getAttribute("name")));
-        System.out.println("before");
     }
 
-    @After("log()")
+//    @After("log()")
     public void after(JoinPoint joinPoint){
         System.out.println("after");
     }

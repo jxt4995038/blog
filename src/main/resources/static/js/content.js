@@ -9,11 +9,11 @@ $(document).ready(function(){
 });
 
 function loadContentLeft(){
-    $("#content_left").load("http://127.0.0.1:8088/toHtml/content_left")
+    $("#content_left").load(url_server+"toHtml/content_left")
 }
 
 function loadContentRright(){
-    $("#content_right").load("http://127.0.0.1:8088/toHtml/content_right")
+    $("#content_right").load(url_server+"toHtml/content_right")
 }
 
 function initBlogList(){
@@ -26,7 +26,7 @@ function initBlogList(){
     var pageSize = $("#pageSize").val();
 
     $.ajax({
-        url:"http://127.0.0.1:8088/blog/showBlogs",
+        url:url_server+"blog/showBlogs",
         data:{"blogTypeIds":blogType,"pageIndex":pageIndex,"pageSize":pageSize},
         type:"post",
         dataType:"json",
@@ -71,7 +71,7 @@ function showInfo(id){
     $("#replyInfo").show();
     //2、查询某篇博客
     $.ajax({
-        url:"http://127.0.0.1:8088/blog/showBlogById",
+        url:url_server+"blog/showBlogById",
         type:"post",
         data:{"id":id},
         dataType:"json",
@@ -92,7 +92,7 @@ function showInfo(id){
             $("#blogInfo").html(info);
 
             // 2 显示回复框
-            $("#replyInfo").load("http://127.0.0.1:8088/toHtml/replyInfo");
+            $("#replyInfo").load(url_server+"toHtml/replyInfo");
         },
         error:function(result){
             alert("error");
@@ -108,7 +108,7 @@ function submitReply(data_html,data_text){
         var blogId = $("#blogId").val();
         //TODO userId暂时是写死的
         $.ajax({
-            url:"http://127.0.0.1:8088/blogReply/addReply",
+            url:url_server+"blogReply/addReply",
             data:{"blogId":blogId,"data_html":data_html,"userId":0},
             type:"post",
             success:function(result){
@@ -126,7 +126,7 @@ function submitReply(data_html,data_text){
 //查看某博客的回复内容
 function showReplyByBlogId(id){
     $.ajax({
-        url:"http://127.0.0.1:8088/blogReply/showReplyByBlogId",
+        url:url_server+"blogReply/showReplyByBlogId",
         data:{"blogId":blogId},
         type:"post",
         dataType:"json",

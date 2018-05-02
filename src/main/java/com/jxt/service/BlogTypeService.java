@@ -6,4 +6,6 @@ import java.util.Map;
 public interface BlogTypeService {
 
     Map<String,String> showAllTypes() throws Exception;
+
+    Map<String,String> showAllTypesWithoutMapping();
 }

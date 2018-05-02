@@ -7,9 +7,9 @@ function initIndex(){
 }
 
 function  loadContent(id) {
-    $("#content").load("http://127.0.0.1:8088/toHtml/content")
+    $("#content").load(url_server+"toHtml/content")
 }
 
 function loadWriteBlog(){
-    $("#content").load("http://127.0.0.1:8088/toHtml/writeBlog")
+    $("#content").load(url_server+"toHtml/writeBlog")
 }

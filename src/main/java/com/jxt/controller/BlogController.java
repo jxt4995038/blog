@@ -28,7 +28,7 @@ public class BlogController {
     @RequestMapping("/blogAdd")
     public IResponse blogAdd(String data_html,String data_text, String blogTitle, int createUserId, Integer blogType, HttpServletResponse response) {
         response.setHeader("Access-Control-Allow-Origin", "*");
-
+        System.out.println(1);
         try {
             blogService.addBlog(data_html,data_text,blogTitle,createUserId,blogType);
             return new SuccessResponse();
